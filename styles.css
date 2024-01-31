@@ -52,13 +52,11 @@ section {
 
 /*--- left side - song list ---*/
     .song-list .item {
-        /* height: 119px;   */
-        /*117px*/
-        /* height: 104.6px; */
-        height: auto;
+        height: max-content;
+        min-height: 92px;
         padding: 12px 34px;
         background-color: #15263c;
-        /* border-bottom: 1px solid #0d1b2c; */
+        border-bottom: 1px solid #0d1b2c;
         color: #fff;
         display: flex;
         justify-content: space-between;
@@ -111,17 +109,21 @@ section.song-list {
 }
 section.player {
     padding-inline: 26px;
+    padding-top: 20px;
 }
 section.song-list {
-    justify-content: space-between;
+    justify-content: flex-start;
     padding-inline: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 
 /*--- right side - play control ---*/
 .box-image {
-    padding-top: 20px;
+    width: 100%;
+    height: 373px;
+    min-height: 373px;
+    
 }
 .box-controller {
     height: 100%;
