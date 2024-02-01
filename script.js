@@ -1,5 +1,3 @@
-const audio = document.querySelector('audio');
-
 const playList = document.querySelector(".song-list");
 playList.addEventListener('click', songClicked);
 
@@ -13,67 +11,101 @@ paus.addEventListener('click', pausClicked);
 
 const btnRepeat = document.querySelector('.controller .repeat');
 btnRepeat.addEventListener('click', repeatClicked);
- console.log(btnRepeat);
+
+const progressor = document.querySelector('.box-controller .progressor');
+const progressBar = document.querySelector('.progress-bar');
+const timeDuration = document.querySelector('.progress-time');
+
+const audio = document.querySelector('audio');
 
 
-// const audio = new Audio();
-//  console.log(audio);
 
-// audio.src = "assets/Boys,_Girls,_Toys_&_Words_-_Modern_Pitch.mp3"; 
-// audio.play();
+
+audio.onloadedmetadata = function() {
+    // console.log('Time: ' + audio.duration);
+
+    document.querySelector('.melody-lenght').innerText = getTimes(audio.duration);
+};
+
+audio.addEventListener("timeupdate", function() {
+    var currentTime = audio.currentTime;
+    var duration = audio.duration;
+
+    
+    // console.log('duration: ', (currentTime / duration));
+    // console.log(currentTime, duration);
+    
+    progressBar.style.width = progressor.offsetWidth * (currentTime / duration) + "px";
+
+    const timePlayed = getTimes(currentTime);
+    timeDuration.innerText = (currentTime != NaN) ? timePlayed : 0;
+});
+
+audio.addEventListener("ended", function() {
+    console.log('Song ended');
+    // if (loop)
+    // if (random)
+    //
+    const actItem = document.querySelector('.song-list .item.active');
+
+    if (actItem.nextElementSibling) {
+        console.log('Next song...' + actItem.nextElementSibling.children[1].innerText);
+
+        actItem.classList.remove('active');
+        actItem.nextElementSibling.click();
+    }
+});
+
+// audio.onplay = function() {
+//     console.log('onplay: ' + audio.duration);
+// }
+
+
+
 
 function songClicked(event) {
+     console.log('--> songClicked()');
     // console.log(event.target);
-    console.log(event.currentTarget);
-    const item = event.target.closest('.item');
-     console.log(item);
-    // Running?
-    // mp3
-    // active item
-    // image/text/
-    // box-image.img.src = item.childNode[0].src;
+
+    const itemBefore = document.querySelector('.item.active');
+    if (itemBefore) {
+        itemBefore.classList.remove('active');
+    }
     
+    const item = event.target.closest('.item');
+    item.classList.add('active');
+    
+    // Set audio source
+    audio.src = 'assets/' + item.getAttribute("data-melody");
+
     // Update player
     document.querySelector('.player img').src = item.children[0].src;
     document.querySelector('.player .artist').innerText = item.querySelector('.artist').innerText;
     document.querySelector('.player .album').innerText = item.querySelector('.melody').innerText;
-
-    // getAttribute("data-melody")
-    // console.log('melody: ' + item.getAttribute("data-melody"));
-    audio.src = 'assets/' + item.getAttribute("data-melody");
-    // console.log(audio.src);
+    
     playClicked();
 }
 
-function controllerClicked(event) {
-    console.log('--> controllerClicked() ' + event.target.classList);
-
-    
-
-}
 function playClicked(event = null) {
      console.log('--> playClicked()');
-     console.log(event);
+    // console.log(event);
     // item clicked || play clicked
     if (!event || audio.src) {   // progress | continue...
-         console.log(audio.src);
+        // console.log(audio.src);
         play.classList.remove('active');
         paus.classList.add('active');
 
-
-
-    } else {
-        console.log('No src!?');
+        audio.play();
+        // audio.currentTime = 220;
     }
 }
 function pausClicked(event) {
     console.log('--> pausClicked()');
-     console.log(event);
-    audio.pause();
+    // console.log(event);
     paus.classList.remove('active');
     play.classList.add('active');
 
-    
+    audio.pause();
 }
 
 
@@ -83,12 +115,10 @@ function repeatClicked(event) {
 }
 
 
-
-
-function findAncestor(element, className) {
-    while ((element = element.parentElement) && !element.classList.contains(className));
-    return element;
+function getTimes(seconds) {
+    return new Date(seconds * 1000).toISOString().slice(14, 19);
 }
+
 
 //=== TEST ===
 // playClicked();
