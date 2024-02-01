@@ -24,9 +24,12 @@ header {
     padding: 0 16px;
     background-color: #2c2f3d;
     color: #fff;
+    font-weight: bold;
+    letter-spacing: 0.02em;
     /* font-size: 20px; */
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: center;
     align-items: center;
 }
 
@@ -126,6 +129,10 @@ section.song-list {
     min-height: 373px;
     
 }
+.box-image {
+    border: 1px solid #464545;
+    background: #2225;
+}
 .box-controller {
     height: 100%;
     background-color: #15263c;
@@ -146,6 +153,26 @@ section.song-list {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.player .song,
+.player .progress,
+.player .controller {
+    /* visibility: hidden; */
+    opacity: 0.3;
+}
+
+.player .song.active,
+.player .progress.active,
+.player .controller.active {
+    /* visibility: hidden; */
+    opacity: 1;
+}
+
+
+.player .song.active,
+.player .progress.active {
+    visibility: visible;
+    opacity: 1;
 }
 
 .player img {
@@ -203,7 +230,7 @@ section.song-list {
     border-radius: 3.5px;
 }
 .progress-bar {
-    width: 18%;
+    width: 0;
     height: 7px;
     background-color: whitesmoke;
     border-radius: 3.5px;
@@ -258,6 +285,17 @@ section.song-list {
 .player .controller .play.active,
 .player .controller .paus.active {
     display: block;
+}
+
+.player .controller .repeat:hover,
+.player .controller .shuffle:hover,
+.player .controller .previous:hover,
+.player .controller .next:hover,
+.player .controller .play:hover,
+.player .controller .paus:hover {
+    /* color: #fefe98;
+    color: #fbfb6e; */
+    cursor: pointer;
 }
 
 

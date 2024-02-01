@@ -67,17 +67,25 @@ function songClicked(event) {
      console.log('--> songClicked()');
     // console.log(event.target);
 
+    // Unactivate previous melody
     const itemBefore = document.querySelector('.item.active');
     if (itemBefore) {
         itemBefore.classList.remove('active');
+    } 
+    
+    // Lighten up player
+    if ( !itemBefore ) {
+        document.querySelector('.player .song').classList.add('active');
+        document.querySelector('.player .progress').classList.add('active');
+        document.querySelector('.player .controller').classList.add('active');
     }
-    
-    const item = event.target.closest('.item');
-    item.classList.add('active');
-    
-    // Set audio source
-    audio.src = 'assets/' + item.getAttribute("data-melody");
 
+    // Show info about new melody    
+    const item = event.target.closest('.item');
+
+    item.classList.add('active');
+    // Set audio source
+    audio.src = 'assets/' + item.getAttribute("data-melody");  
     // Update player
     document.querySelector('.player img').src = item.children[0].src;
     document.querySelector('.player .artist').innerText = item.querySelector('.artist').innerText;
@@ -96,7 +104,6 @@ function playClicked(event = null) {
         paus.classList.add('active');
 
         audio.play();
-        // audio.currentTime = 220;
     }
 }
 function pausClicked(event) {
