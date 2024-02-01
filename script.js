@@ -9,6 +9,9 @@ play.addEventListener('click', playClicked);
 const paus = document.querySelector('.controller .paus');
 paus.addEventListener('click', pausClicked);
 
+const previous = document.querySelector('.controller .previous');
+previous.addEventListener('click', previousClicked);
+
 const btnRepeat = document.querySelector('.controller .repeat');
 btnRepeat.addEventListener('click', repeatClicked);
 
@@ -79,8 +82,8 @@ function songClicked(event) {
         document.querySelector('.player .progress').classList.add('active');
         document.querySelector('.player .controller').classList.add('active');
     }
-
-    // Show info about new melody    
+    
+    // Show info about new melody
     const item = event.target.closest('.item');
 
     item.classList.add('active');
@@ -106,6 +109,7 @@ function playClicked(event = null) {
         audio.play();
     }
 }
+
 function pausClicked(event) {
     console.log('--> pausClicked()');
     // console.log(event);
@@ -115,7 +119,27 @@ function pausClicked(event) {
     audio.pause();
 }
 
+function previousClicked(event) {
+     console.log('clicked previous');
+    const actItem = document.querySelector('.item.active');
 
+    if (actItem) {
+        if (actItem.previousElementSibling) {
+            actItem.previousElementSibling.click();
+        }
+        else {
+            const allItems = document.querySelector('.song-list');
+
+            // Most be anoter melody then the playing to switch to...
+            if (allItems.children.length >= 2) {
+                allItems.children.item( allItems.children.length - 1 ).click();
+            }
+        }
+    }
+     else {
+        console.log('No actItem');
+    }
+}
 
 function repeatClicked(event) {
     
