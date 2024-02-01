@@ -62,7 +62,10 @@ section {
         justify-content: space-between;
         align-items: center;
     }
-   
+    .song-list .item:hover {
+        cursor: pointer;
+        background-color: #3d4759;
+    }
 
     .song-list img {
         width: 68px;
@@ -89,8 +92,6 @@ section {
 
     /* Playing list item*/
     .song-list .item.active {
-        background-color: #444;
-        background-color: #2f3644;
         background-color: #3d4759;
     }
     .song-list .item.active .play {
@@ -130,7 +131,8 @@ section.song-list {
     background-color: #15263c;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-evenly; */
+    justify-content: space-evenly;
+     /* background-color: #444; */
 }
 
 
@@ -156,15 +158,16 @@ section.song-list {
 }
 
 /*--- song ---*/
+
 .song .info {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 100%;
+    padding: 0;
+     /* background-color: #a00; */
 }
-.song .artist,
-    .song .album {
-    text-align: center;
-}
+
 .song .artist {
     font-size: 140%;
     color: #c9c7c7;
@@ -185,6 +188,7 @@ section.song-list {
 .player .progress {
     flex-direction: column;
     justify-content: center;
+    height: auto;
     /* background-color: #444; */
 }
 .progress-time {
@@ -236,22 +240,24 @@ section.song-list {
     align-items: center;
 }
 .player .controller .direction {  
-    /* color: green; */
     font-size:  50px;
 }
 .player .controller .previous,
 .player .controller .next {  
-    /* color: green; */
     font-size:  30px;
 }
 
-.player .controller .play {
+.player .controller .play,
+.player .controller .paus {
     /* color: blue; */
     margin-inline: 20px;
     font-size: 60px;
-
+    display: none;
 }
-
+.player .controller .play.active,
+.player .controller .paus.active {
+    display: block;
+}
 
 
 /* icons */
