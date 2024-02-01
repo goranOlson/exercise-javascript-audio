@@ -191,7 +191,8 @@ section.song-list {
     height: auto;
     /* background-color: #444; */
 }
-.progress-time {
+.progress-time,
+.melody-lenght {
     color: rgb(133, 131, 131);
     font-size: 95%;
 }
