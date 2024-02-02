@@ -1,6 +1,6 @@
 * {
     margin: 0;
-    /* font-size: 16px; */
+    font-size: 16px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     box-sizing: border-box;
 }
@@ -26,9 +26,7 @@ header {
     color: #fff;
     font-weight: bold;
     letter-spacing: 0.02em;
-    /* font-size: 20px; */
     display: flex;
-    /* justify-content: space-between; */
     justify-content: center;
     align-items: center;
 }
@@ -54,53 +52,52 @@ section {
 }
 
 /*--- left side - song list ---*/
-    .song-list .item {
-        height: max-content;
-        min-height: 92px;
-        padding: 12px 34px;
-        background-color: #15263c;
-        border-bottom: 1px solid #0d1b2c;
-        color: #fff;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .song-list .item:hover {
-        cursor: pointer;
-        background-color: #3d4759;
-    }
+.song-list .item {
+    height: max-content;
+    min-height: 92px;
+    padding: 12px 34px;
+    background-color: #15263c;
+    border-bottom: 1px solid #0d1b2c;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.song-list .item:hover {
+    cursor: pointer;
+    background-color: #3d4759;
+}
 
-    .song-list img {
-        width: 68px;
-        height: fit-content;
-    }
+.song-list img {
+    width: 68px;
+    height: fit-content;
+}
 
-    .song-list .info {
-        padding-inline: 16px;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
+.song-list .info {
+    padding-inline: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
 
-    .song-list .artist {
-        color: #f5f5f5;
-        font-size: 120%;
-    }
-    .song-list .melody {
-        color: #c9c7c7;
-        font-size: 110%;
-    }
+.song-list .artist {
+    color: #f5f5f5;
+    font-size: 120%;
+}
+.song-list .melody {
+    color: #c9c7c7;
+    font-size: 110%;
+}
 
-    .song-list .play { color: #475c7c; }
+.song-list .play { color: #475c7c; }
 
-    /* Playing list item*/
-    .song-list .item.active {
-        background-color: #3d4759;
-    }
-    .song-list .item.active .play {
-        color: #fff;
-    }
-
+/* Playing list item*/
+.song-list .item.active {
+    background-color: #3d4759;
+}
+.song-list .item.active .play {
+    color: #fff;
+}
 
 section.player,
 section.song-list {
@@ -133,15 +130,17 @@ section.song-list {
     border: 1px solid #464545;
     background: #2225;
 }
+.box-image.active {
+    border: 0;
+    background-color: unset;
+}
 .box-controller {
     height: 100%;
     background-color: #15263c;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-     /* background-color: #444; */
 }
-
 
 .player .image,
 .player .song,
@@ -157,7 +156,6 @@ section.song-list {
 .player .song,
 .player .progress,
 .player .controller {
-    /* visibility: hidden; */
     opacity: 0.3;
 }
 
@@ -188,14 +186,12 @@ section.song-list {
 }
 
 /*--- song ---*/
-
 .song .info {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
     padding: 0;
-     /* background-color: #a00; */
 }
 
 .song .artist {
@@ -210,8 +206,8 @@ section.song-list {
     font-size: 26px;
 }
 .song .favorite {
-        color: rgb(133, 131, 131);
-        font-size: 22px;
+    color: rgb(133, 131, 131);
+    font-size: 22px;
 }
 
 /*--- progress ---*/
@@ -219,7 +215,6 @@ section.song-list {
     flex-direction: column;
     justify-content: center;
     height: auto;
-    /* background-color: #444; */
 }
 .progress-time,
 .melody-lenght {
@@ -249,8 +244,6 @@ section.song-list {
     width: 100%;
     margin-top: 4px;
 }
-
-
 
 .player .controller .repeat,
 .player .controller .shuffle {
@@ -284,7 +277,6 @@ section.song-list {
 
 .player .controller .play,
 .player .controller .paus {
-    /* color: blue; */
     margin-inline: 20px;
     font-size: 60px;
     display: none;
@@ -304,7 +296,3 @@ section.song-list {
     color: #fbfb6e; */
     cursor: pointer;
 }
-
-
-/* icons */
-/* header .material-icons { font-size: 30px; } */
