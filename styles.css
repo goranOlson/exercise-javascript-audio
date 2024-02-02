@@ -164,7 +164,6 @@ section.song-list {
 .player .song.active,
 .player .progress.active,
 .player .controller.active {
-    /* visibility: hidden; */
     opacity: 1;
 }
 
@@ -178,6 +177,10 @@ section.song-list {
 .player img {
     width: 100%;
     height: fit-content;
+    display: none;
+}
+.player img.active {
+    display: block;
 }
 
 .player .controller {
