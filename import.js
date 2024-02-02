@@ -12,6 +12,7 @@ fetch(file)
 
 function createListItems(lines) {
     console.log('--> createListItems() ' + lines.length);
+    console.log('');
     if (lines) {
         const playList = document.querySelector('.song-list');
 
@@ -28,8 +29,5 @@ function createListItems(lines) {
             
             playList.insertAdjacentHTML('beforeend', item);
         }
-
-
     }
-
 }
