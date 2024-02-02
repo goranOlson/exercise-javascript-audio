@@ -232,6 +232,10 @@ section.song-list {
     background-color: #1128;
     border-radius: 3.5px;
 }
+.progressor:hover {
+    cursor: pointer;
+}
+
 .progress-bar {
     width: 0;
     height: 7px;

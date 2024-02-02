@@ -22,6 +22,7 @@ const btnShuffle = document.querySelector('.controller .shuffle');
 btnShuffle.addEventListener('click', shuffleClicked);
 
 const progressor = document.querySelector('.box-controller .progressor');
+progressor.addEventListener('click', progressorClick);
 const progressBar = document.querySelector('.progress-bar');
 const timeDuration = document.querySelector('.progress-time');
 const audio = document.querySelector('audio');
@@ -30,6 +31,26 @@ const audio = document.querySelector('audio');
 let doRepeat = false;
 let doShuffle = false;
 
+function progressorClick(event) {
+  
+    const songLen = (audio) ? audio.duration : 0;
+
+    if (songLen > 0) {
+        const totWidth = progressor.offsetWidth;
+        const procent = event.offsetX / totWidth;  // 180 / 320px => ~ 56%
+        const seconds = songLen * procent;  // 300s * 56%
+        // console.log('seconds: ' + seconds + ' (' + (procent * 100).toFixed(0) + '%)');
+        
+        audio.currentTime = seconds;
+    }
+}
+
+// audio.onprogress = function() {
+//      console.log('onprogress event');
+//     if (audio.currentTime == 0) {
+//       // audio.currentTime = 10;
+//     }
+//   }
 
 audio.onloadedmetadata = function() {
     // console.log('Time: ' + audio.duration);
