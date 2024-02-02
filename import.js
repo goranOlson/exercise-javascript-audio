@@ -11,9 +11,10 @@ fetch(file)
 
 
 function createListItems(lines) {
-    console.log('--> createListItems() ' + lines.length);
-    console.log('');
+    // console.log('--> createListItems() ' + lines.length);
+    
     if (lines) {
+        console.log('Importing playlist... ' + lines.length + ' pcs');
         const playList = document.querySelector('.song-list');
 
         for (const song of lines) {

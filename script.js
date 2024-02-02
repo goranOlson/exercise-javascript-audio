@@ -45,30 +45,19 @@ function progressorClick(event) {
     }
 }
 
-// audio.onprogress = function() {
-//      console.log('onprogress event');
-//     if (audio.currentTime == 0) {
-//       // audio.currentTime = 10;
-//     }
-//   }
-
 audio.onloadedmetadata = function() {
-    // console.log('Time: ' + audio.duration);
+    // Set total length of melody: "02:42"
 
-    document.querySelector('.melody-lenght').innerText = getTimeString(audio.duration);
+    // console.log('Time: ' + audio.duration + ' => "' + getTimeString(audio.duration) + '"');
+    document.querySelector('.melody-lenght').innerText = createTimeString(audio.duration);
 };
 
 audio.addEventListener("timeupdate", function() {
     var currentTime = audio.currentTime;
     var duration = audio.duration;
-
-    
-    // console.log('duration: ', (currentTime / duration));
-    // console.log(currentTime, duration);
-    
     progressBar.style.width = progressor.offsetWidth * (currentTime / duration) + "px";
 
-    const timePlayed = getTimeString(currentTime);
+    const timePlayed = createTimeString(currentTime);  // "00:42"
     timeDuration.innerText = (currentTime != NaN) ? timePlayed : 0;
 });
 
@@ -114,8 +103,7 @@ audio.addEventListener("ended", function() {
 });
 
 function songClicked(event) {
-     console.log('--> songClicked()');
-    // console.log(event.target);
+    // console.log('--> songClicked()');
 
     // Unactivate previous melody
     const melodyBefore = document.querySelector('.item.active');
@@ -125,6 +113,7 @@ function songClicked(event) {
     
     // Lighten up player if no previous melody
     if ( !melodyBefore ) {
+        document.querySelector('.player .box-image').classList.add('active');
         document.querySelector('.player .box-image img').classList.add('active');
         document.querySelector('.player .song').classList.add('active');
         document.querySelector('.player .progress').classList.add('active');
@@ -145,8 +134,8 @@ function songClicked(event) {
 }
 
 function playClicked(event = null) {
-     console.log('--> playClicked()');
-    // console.log(event);
+    //  console.log('--> playClicked()');
+
     // item clicked || play clicked
     if (!event || audio.src) {   // progress | continue...
         // console.log(audio.src);
@@ -158,8 +147,8 @@ function playClicked(event = null) {
 }
 
 function pausClicked(event) {
-    console.log('--> pausClicked()');
-    // console.log(event);
+    // console.log('--> pausClicked()');
+    
     paus.classList.remove('active');
     play.classList.add('active');
 
@@ -167,7 +156,7 @@ function pausClicked(event) {
 }
 
 function playPreviousMelody(event) {
-     console.log('clicked previous');
+    // console.log('clicked previous');
     const actItem = document.querySelector('.item.active');
 
     if (actItem) {
@@ -183,20 +172,20 @@ function playPreviousMelody(event) {
 }
 
 function playNextMelody(event) {
-    console.log('clicked next');
-   const actItem = document.querySelector('.item.active');
+    // console.log('clicked next');
+    const actItem = document.querySelector('.item.active');
 
-   if (actItem) {
-       if (actItem.nextElementSibling) {
-           actItem.nextElementSibling.click();
-       }
-       else {
-           // Most be anoter melody then the playing to switch to...
-           if (playList.children.length >= 2) {
-            playList.children.item(0).click();
-           }
-       }
-   }
+    if (actItem) {
+        if (actItem.nextElementSibling) {
+            actItem.nextElementSibling.click();
+        }
+        else {
+            // Most be anoter melody then the playing to switch to...
+            if (playList.children.length >= 2) {
+                playList.children.item(0).click();
+            }
+        }
+    }
 }
 
 function repeatClicked(event) {
@@ -238,7 +227,7 @@ function shuffleClicked(event) {
 }
 
 
-function getTimeString(seconds) {
+function createTimeString(seconds) {
     return new Date(seconds * 1000).toISOString().slice(14, 19);
 }
 
@@ -265,8 +254,3 @@ function findIndex(htmlCollection, string) {
 
     return index;
 }
-
-
-
-//=== TEST ===
-// playClicked();
