@@ -25,7 +25,7 @@ function createListItems(lines) {
                     <span class="melody">${song[1]}</span>
                     <span class="artist">${song[0]}</span>
                 </span>
-                <span class="material-icons play">play_circle</span>
+                <span class="fas fa-play-circle play"></span>
             </div>`;
             
             playList.insertAdjacentHTML('beforeend', item);
