@@ -128,7 +128,7 @@ function songClicked(event) {
     // Update player
     document.querySelector('.player img').src = item.children[0].src;
     document.querySelector('.player .artist').innerText = item.querySelector('.artist').innerText;
-    document.querySelector('.player .album').innerText = item.querySelector('.melody').innerText;
+    document.querySelector('.player .melody').innerText = item.querySelector('.melody').innerText;
     
     playClicked();
 }

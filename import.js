@@ -16,14 +16,14 @@ function createListItems(lines) {
     if (lines) {
         console.log('Importing playlist... ' + lines.length + ' pcs');
         const playList = document.querySelector('.song-list');
-
+        
         for (const song of lines) {
             const item = `
             <div class="item" data-melody="${song[3]}">
                 <img src="assets/${song[2]}" alt="${song[0]}/${song[1]}">
                 <span class="info">
-                    <span class="artist">${song[0]}</span>
                     <span class="melody">${song[1]}</span>
+                    <span class="artist">${song[0]}</span>
                 </span>
                 <span class="material-icons play">play_circle</span>
             </div>`;
