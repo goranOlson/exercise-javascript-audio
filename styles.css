@@ -90,7 +90,10 @@ section {
     font-size: 18px;
 }
 
-.song-list .play { color: #475c7c; }
+.song-list .play {
+    color: #475c7c;
+    font-size: 26px;
+}
 
 /* Playing list item*/
 .song-list .item.active {
@@ -232,7 +235,7 @@ section.song-list {
     background-color: #1128;
     border-radius: 3.5px;
 }
-.progressor:hover {
+.progressor.active:hover {
     cursor: pointer;
 }
 

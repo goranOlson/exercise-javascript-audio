@@ -116,6 +116,7 @@ function songClicked(event) {
         document.querySelector('.player .box-image').classList.add('active');
         document.querySelector('.player .box-image img').classList.add('active');
         document.querySelector('.player .song').classList.add('active');
+        document.querySelector('.player .progressor').classList.add('active');
         document.querySelector('.player .progress').classList.add('active');
         document.querySelector('.player .controller').classList.add('active');
     }
