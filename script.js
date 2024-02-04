@@ -114,11 +114,11 @@ function songClicked(event) {
         if (clickedItem != actItem) {
             console.log('- new/change item');
 
-            // if (oldItem) - unlighten, restore icons if needed
+            // Restore previous melody if exitst
             if (actItem) {
                 actItem.classList.remove('active');
-                actItem.children.item(2).classList.add('hidden');  // play
-                actItem.children.item(3).classList.remove('hidden');  // paus
+                actItem.children.item(2).classList.remove('hidden');  // play
+                actItem.children.item(3).classList.add('hidden');  // paus
             }
 
             // Make clickedItem the active item!
@@ -140,11 +140,10 @@ function songClicked(event) {
             document.querySelector('.player .artist').innerText = clickedItem.querySelector('.artist').innerText;
             document.querySelector('.player .melody').innerText = clickedItem.querySelector('.melody').innerText;
 
-            // 
+            // Play melody
             playClicked();
-            // showPlay = false
             
-            // Read again!
+            // Update active item to handle item icons below
             actItem = document.querySelector('.item.active');
         }
         else {  //--- Active item clicked - paus or play
