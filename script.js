@@ -105,55 +105,100 @@ audio.addEventListener("ended", function() {
 function songClicked(event) {
     // console.log('--> songClicked()');
 
-    // Unactivate previous melody
-    const melodyBefore = document.querySelector('.item.active');
-    if (melodyBefore) {
-        melodyBefore.classList.remove('active');
-    } 
-    
-    // Lighten up player if no previous melody
-    if ( !melodyBefore ) {
-        document.querySelector('.player .box-image').classList.add('active');
-        document.querySelector('.player .box-image img').classList.add('active');
-        document.querySelector('.player .song').classList.add('active');
-        document.querySelector('.player .progressor').classList.add('active');
-        document.querySelector('.player .progress').classList.add('active');
-        document.querySelector('.player .controller').classList.add('active');
-    }
-    
-    // Show info about new melody
-    const item = event.target.closest('.item');
-    item.classList.add('active');
-    audio.src = 'assets/' + item.getAttribute("data-melody");
+    let actItem = document.querySelector('.item.active');
 
-    // Update player
-    document.querySelector('.player img').src = item.children[0].src;
-    document.querySelector('.player .artist').innerText = item.querySelector('.artist').innerText;
-    document.querySelector('.player .melody').innerText = item.querySelector('.melody').innerText;
-    
-    playClicked();
+    if (event) {
+         console.log('songClicked(event)');
+        const clickedItem = event.target.closest('.item');
+
+        if (clickedItem != actItem) {
+            console.log('- new/change item');
+
+            // if (oldItem) - unlighten, restore icons if needed
+            if (actItem) {
+                actItem.classList.remove('active');
+                actItem.children.item(2).classList.add('hidden');  // play
+                actItem.children.item(3).classList.remove('hidden');  // paus
+            }
+
+            // Make clickedItem the active item!
+            clickedItem.classList.add('active');
+
+            // Set player image, texts
+            document.querySelector('.player .box-image').classList.add('active');
+            document.querySelector('.player .box-image img').classList.add('active');
+            document.querySelector('.player .song').classList.add('active');
+            document.querySelector('.player .progressor').classList.add('active');
+            document.querySelector('.player .progress').classList.add('active');
+            document.querySelector('.player .controller').classList.add('active');
+
+            // Set audio melody
+            audio.src = 'assets/' + clickedItem.getAttribute("data-melody");
+
+            // Set played melody information
+            document.querySelector('.player img').src = clickedItem.children[0].src;
+            document.querySelector('.player .artist').innerText = clickedItem.querySelector('.artist').innerText;
+            document.querySelector('.player .melody').innerText = clickedItem.querySelector('.melody').innerText;
+
+            // 
+            playClicked();
+            // showPlay = false
+            
+            // Read again!
+            actItem = document.querySelector('.item.active');
+        }
+        else {  //--- Active item clicked - paus or play
+            if (audio.paused) {
+                playClicked();
+            }
+            else {
+                pausClicked();
+            }
+        }
+    }
+
+    //--- Set item icons
+    if (audio.paused) {
+        actItem.children.item(2).classList.remove('hidden');  // play
+        actItem.children.item(3).classList.add('hidden');  // paus
+    }
+    else {
+        actItem.children.item(2).classList.add('hidden');  // play
+        actItem.children.item(3).classList.remove('hidden');  // paus
+    }
 }
 
 function playClicked(event = null) {
     //  console.log('--> playClicked()');
 
-    // item clicked || play clicked
-    if (!event || audio.src) {   // progress | continue...
-        // console.log(audio.src);
-        play.classList.remove('active');
-        paus.classList.add('active');
+    const actItem = document.querySelector('.song-list .item.active');
 
+    if (actItem) {
+        
+        play.classList.remove('active');
+        paus.classList.add('active');  // 
         audio.play();
+
+        if (event) {  // Handle item icons
+            songClicked();
+        }
     }
 }
 
 function pausClicked(event) {
     // console.log('--> pausClicked()');
-    
-    paus.classList.remove('active');
-    play.classList.add('active');
+    const actItem = document.querySelector('.song-list .item.active');
 
-    audio.pause();
+    if (actItem) {
+        paus.classList.remove('active');  // 
+        play.classList.add('active');
+        audio.pause();
+
+        if (event) {  // Handle item icons
+            songClicked();
+        }
+        
+    }
 }
 
 function playPreviousMelody(event) {

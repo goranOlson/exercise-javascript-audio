@@ -90,16 +90,24 @@ section {
     font-size: 18px;
 }
 
-.song-list .play {
+.song-list .play,
+.song-list .paus {
     color: #475c7c;
     font-size: 26px;
 }
+
+.song-list .play.hidden,
+.song-list .paus.hidden {
+    display: none;
+}
+
 
 /* Playing list item*/
 .song-list .item.active {
     background-color: #3d4759;
 }
-.song-list .item.active .play {
+.song-list .item.active .play,
+.song-list .item.active .paus {
     color: #fff;
 }
 
