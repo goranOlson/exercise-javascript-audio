@@ -64,10 +64,13 @@ audio.addEventListener("timeupdate", function() {
 audio.addEventListener("ended", function() {
     console.log('Song ended');
 
-    const actItem = document.querySelector('.song-list .item.active');
+    let actItem = document.querySelector('.song-list .item.active');
 
     if (doRepeat) {
-        actItem.click();
+        // console.log('doRepeat...');
+        if (actItem.nextElementSibling) {
+            actItem.nextElementSibling.click();  // Play next melody
+        }
     }
     else if (doShuffle) {
         // >= 2 melodies
@@ -92,28 +95,30 @@ audio.addEventListener("ended", function() {
             playList.children.item(nextId - 1).click();
         }
     }
-    else {
-        if (actItem.nextElementSibling) {
-            console.log('Next song...' + actItem.nextElementSibling.children[1].innerText);
+    else {  // ended...
+        // Restore item icons
+        // actItem.children.item(2).classList.remove('hidden');  // play
+        // actItem.children.item(3).classList.add('hidden');  // paus
 
-            actItem.classList.remove('active');
-            actItem.nextElementSibling.click();
-        }
+        // actItem.classList.remove('active');
+        // actItem.nextElementSibling.click();
     }
+
+
+    // Restore item icons
+    actItem.children.item(2).classList.remove('hidden');  // play
+    actItem.children.item(3).classList.add('hidden');  // paus
 });
 
 function songClicked(event) {
-    // console.log('--> songClicked()');
+     console.log('--> songClicked()');
 
     let actItem = document.querySelector('.item.active');
 
     if (event) {
-         console.log('songClicked(event)');
         const clickedItem = event.target.closest('.item');
 
         if (clickedItem != actItem) {
-            console.log('- new/change item');
-
             // Restore previous melody if exitst
             if (actItem) {
                 actItem.classList.remove('active');
@@ -270,7 +275,6 @@ function shuffleClicked(event) {
         }
     }
 }
-
 
 function createTimeString(seconds) {
     return new Date(seconds * 1000).toISOString().slice(14, 19);
