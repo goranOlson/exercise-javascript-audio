@@ -31,6 +31,8 @@ const audio = document.querySelector('audio');
 let doRepeat = false;
 let doShuffle = false;
 
+let randomList = [];
+
 function progressorClick(event) {
   
     const songLen = (audio) ? audio.duration : 0;
@@ -62,48 +64,38 @@ audio.addEventListener("timeupdate", function() {
 });
 
 audio.addEventListener("ended", function() {
-    console.log('Song ended');
+    // console.log('Song ended');
 
     let actItem = document.querySelector('.song-list .item.active');
 
-    if (doRepeat) {
-        // console.log('doRepeat...');
+    if (doRepeat) {  // Play next melody if exist, else first
         if (actItem.nextElementSibling) {
-            actItem.nextElementSibling.click();  // Play next melody
+            actItem.nextElementSibling.click();
+        }
+        else {
+            playList.children.item(0).click();
         }
     }
     else if (doShuffle) {
-        // >= 2 melodies
-        //  console.log(createRandom(1, 8, 6));
-        // const nextNbr = createRandom(1, playList.children.length, NOTid);
-        // 
-        // actItem.dataset['melody']
+        // Create new random list if empty
+        if (randomList.length === 0 ) {
+            const actItem = document.querySelector('.song-list .item.active');
+            const idx = findIndex(playList.children, actItem.dataset['melody']);
 
+            randomList = createRandomList(playList.children.length, idx);
+        }
 
-        console.log(actItem.dataset['melody']);
-        
-        // actItem index in playList
-        const idx = findIndex(playList.children, actItem.dataset['melody']);
-
-        // Warning: starts with 1...
-        const nextId = createRandom(1, playList.children.length, idx + 1);
-        // console.log('nextId: ' + nextId + ' =>' + (nextId - 1));  // 0-start...
-
+        // Play next melody in playlist
+        const nextId = randomList.shift();
         if (nextId >= 0) {
-            // console.log('nextId: ' + nextId + ' => ' + (nextId - 1) );
-            // Correct index from createRandom
-            playList.children.item(nextId - 1).click();
+            playList.children.item(nextId).click();
         }
     }
-    else {  // ended...
-        // Restore item icons
-        // actItem.children.item(2).classList.remove('hidden');  // play
-        // actItem.children.item(3).classList.add('hidden');  // paus
-
-        // actItem.classList.remove('active');
-        // actItem.nextElementSibling.click();
+    else {    // Play next melody if exists
+        if (actItem.nextElementSibling) {
+            actItem.nextElementSibling.click();
+        }
     }
-
 
     // Restore item icons
     actItem.children.item(2).classList.remove('hidden');  // play
@@ -282,7 +274,7 @@ function createTimeString(seconds) {
 
 function createRandom(min, max, avoid) {
     let nbr;
-    //  console.log('--> createRandom('+min+', '+max+' not '+avoid+')');
+    
     do {
         nbr = Math.floor(Math.random() * (max - min + 1) + min);    
         // console.log(`Test: ${nbr} vs ${avoid}`);
@@ -302,4 +294,25 @@ function findIndex(htmlCollection, string) {
     }
 
     return index;
+}
+
+function createRandomList(length, notNbr = -1) {
+    const arr = [];
+
+    // Create list of unique numbers [0 - length]
+    while(arr.length < length){
+        const nbr = Math.floor(Math.random() * length);  //  + 1  // Starts with '0'
+        const idx = arr.indexOf(nbr);
+
+        if(arr.indexOf(nbr) === -1) {
+            arr.push(nbr);
+        } 
+    }
+    
+    // Remove notNbr, if set, from array
+    if (notNbr >= 0) {
+        arr.splice( arr.indexOf(notNbr), 1);
+    }
+
+    return arr;
 }
