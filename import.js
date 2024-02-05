@@ -1,33 +1,25 @@
-const fileName = "playlist.txt";  // => "playlist"
+const fileName = "./playlist.txt";  // => "playlist"
 const storageName = fileName.substring(0, fileName.lastIndexOf('.'));
 let melodyList;
 
-if ( !(melodyList = readLocalStorage(storageName)) ) {  
-    if ( (melodyList = importListFromFile(fileName)) ) {
-        // Save to localStorage
-        writeLocalStorage(melodyList, storageName);  
-    }
+// Import playlist from localStorage or else from file
+if ( !importFromLocalStorage(storageName) ) {
+    importFromFile(fileName);
 }
 
-if (melodyList) {
-    createListItems(melodyList);
-}
-else {
-    console.log("Could't find any playlist from local storage or file!?");
-}
 
-function importListFromFile(filename) {
-    let arr;
-
+function importFromFile(filename) {
     fetch(filename)
     .then(response => response.text())
     .then(data => {
         const lines = data.split("\n");
-        arr = lines.map(line => line.split("|")); 
+        const arr = lines.map(line => line.split("|")); 
+
+        // Create html elements and write to localStorage
+        createListItems(arr);
+        writeLocalStorage(arr, storageName);
     })
     .catch(error => console.error("An error occurred:", error));
-
-    return arr;
 }
 
 function writeLocalStorage(arr, storageName) {
@@ -36,19 +28,24 @@ function writeLocalStorage(arr, storageName) {
     }
 }
 
-function readLocalStorage(storageName) {
+function importFromLocalStorage(storageName) {
+    let success = false;
     let arr;
 
     if (storageName) {
-        arr = JSON.parse( localStorage.getItem(storageName) );
+        if ( (arr = JSON.parse( localStorage.getItem(storageName) ))) {
+            // Create html elements
+            createListItems(arr);
+            success = true;
+        }
     }
 
-    return arr;
+    return success;
 }
 
 function createListItems(lines) {
     if (lines) {
-         console.log('Importing playlist... ' + lines.length + ' pcs');
+        // console.log('Importing playlist... ' + lines.length + ' pcs');
         const playList = document.querySelector('.song-list');
         
         for (const song of lines) {
