@@ -125,9 +125,10 @@ function songClicked(event) {
             // Make clickedItem the active item!
             clickedItem.classList.add('active');
 
-            // Set player image, texts
+            // Set player image, texts, ...
             document.querySelector('.player .box-image').classList.add('active');
             document.querySelector('.player .box-image img').classList.add('active');
+            
             document.querySelector('.player .song').classList.add('active');
             document.querySelector('.player .progressor').classList.add('active');
             document.querySelector('.player .progress').classList.add('active');
@@ -138,6 +139,7 @@ function songClicked(event) {
 
             // Set played melody information
             document.querySelector('.player img').src = clickedItem.children[0].src;
+            document.querySelector('.player .box-image img').setAttribute('alt', clickedItem.children[0].getAttribute('alt'));
             document.querySelector('.player .artist').innerText = clickedItem.querySelector('.artist').innerText;
             document.querySelector('.player .melody').innerText = clickedItem.querySelector('.melody').innerText;
 
