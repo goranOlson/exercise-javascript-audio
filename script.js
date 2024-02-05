@@ -44,6 +44,7 @@ function progressorClick(event) {
         // console.log('seconds: ' + seconds + ' (' + (procent * 100).toFixed(0) + '%)');
         
         audio.currentTime = seconds;
+        audio.play();
     }
 }
 
@@ -94,6 +95,9 @@ audio.addEventListener("ended", function() {
     else {    // Play next melody if exists
         if (actItem.nextElementSibling) {
             actItem.nextElementSibling.click();
+        }
+        else {
+            pausClicked();  // Hide paus button and show play button
         }
     }
 
@@ -230,57 +234,36 @@ function playNextMelody(event) {
     }
 }
 
-function repeatClicked(event) {
-    // console.log('--> repeatClicked() doRepeat: ' + doRepeat);
-    
-    // Must have active melody
-    if (document.querySelector('.item.active')) {
-        if (doRepeat) {
-            doRepeat = false;
-            btnRepeat.classList.remove('active');
-            // console.log('doRepeat: ' + doRepeat);
-        }
-        else {
+function repeatClicked(event = null) {
+    if (document.querySelector('.item.active')) {  // Must have active melody
+        if (event && !doRepeat) {  // Set doRepeat
             doRepeat = true;
             btnRepeat.classList.add('active');
-            btnShuffle.classList.remove('active');
-            // console.log('doRepeat: ' + doRepeat);
+            shuffleClicked();  // Stop shuffle
+        }
+        else {
+            doRepeat = false;
+            btnRepeat.classList.remove('active');
         }
     }
 }
 
 function shuffleClicked(event) {
-    // console.log('--> shuffleClicked() doShuffle: ' + doShuffle);
-
-    // Must have active melody
-    if (document.querySelector('.item.active')) {
-        if (doShuffle) {
-            doShuffle = false;
-            btnShuffle.classList.remove('active');
-            // console.log('doShuffle: ' + doShuffle);
-        }
-        else {
+    if (document.querySelector('.item.active')) {  // Must have active melody
+        if (event && !doShuffle) {  // Set doShuffle
             doShuffle = true;
             btnShuffle.classList.add('active');
-            btnRepeat.classList.remove('active');
-            // console.log('doShuffle: ' + doShuffle);
+            repeatClicked();  // stop repeat
+        }
+        else {
+            doShuffle = false;
+            btnShuffle.classList.remove('active');
         }
     }
 }
 
 function createTimeString(seconds) {
     return new Date(seconds * 1000).toISOString().slice(14, 19);
-}
-
-function createRandom(min, max, avoid) {
-    let nbr;
-    
-    do {
-        nbr = Math.floor(Math.random() * (max - min + 1) + min);    
-        // console.log(`Test: ${nbr} vs ${avoid}`);
-    } while (nbr === avoid);
-
-    return nbr;
 }
 
 function findIndex(htmlCollection, string) {
