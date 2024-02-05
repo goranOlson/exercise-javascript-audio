@@ -1,20 +1,54 @@
-const file = "playlist.txt";
+const fileName = "playlist.txt";  // => "playlist"
+const storageName = fileName.substring(0, fileName.lastIndexOf('.'));
+let melodyList;
 
-fetch(file)
-  .then(response => response.text())
-  .then(data => {
-    const lines = data.split("\n");
-    const array = lines.map(line => line.split("|")); 
-    createListItems(array);
-  })
-  .catch(error => console.error("An error occurred:", error));
+if ( !(melodyList = readLocalStorage(storageName)) ) {  
+    if ( (melodyList = importListFromFile(fileName)) ) {
+        // Save to localStorage
+        writeLocalStorage(melodyList, storageName);  
+    }
+}
 
+if (melodyList) {
+    createListItems(melodyList);
+}
+else {
+    console.log("Could't find any playlist from local storage or file!?");
+}
+
+function importListFromFile(filename) {
+    let arr;
+
+    fetch(filename)
+    .then(response => response.text())
+    .then(data => {
+        const lines = data.split("\n");
+        arr = lines.map(line => line.split("|")); 
+    })
+    .catch(error => console.error("An error occurred:", error));
+
+    return arr;
+}
+
+function writeLocalStorage(arr, storageName) {
+    if (arr && storageName) {
+        localStorage.setItem(storageName, JSON.stringify(arr));
+    }
+}
+
+function readLocalStorage(storageName) {
+    let arr;
+
+    if (storageName) {
+        arr = JSON.parse( localStorage.getItem(storageName) );
+    }
+
+    return arr;
+}
 
 function createListItems(lines) {
-    // console.log('--> createListItems() ' + lines.length);
-    
     if (lines) {
-        console.log('Importing playlist... ' + lines.length + ' pcs');
+         console.log('Importing playlist... ' + lines.length + ' pcs');
         const playList = document.querySelector('.song-list');
         
         for (const song of lines) {
