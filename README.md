@@ -3,8 +3,8 @@
 It's time to create a real music player in JavaScript. With everything we have learned so far, this will be a good challenge for you.
 
 <br>
-<div style="margin: auto; width: 200px;">
-  <img src="./assets/inspiration_screenshot.png">
+<div style="margin: auto; width: 100%;">
+  <img src="./assets/Musicplayer.png">
 </div>
 <br>
 
